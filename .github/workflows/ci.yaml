@@ -35,6 +35,7 @@ jobs:
   nvm-setup:
     name: "Configuration"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     steps:
       - uses: actions/checkout@v3
 
@@ -59,6 +60,7 @@ jobs:
   k8s-setup:
     name: "Setup Kind & Kubectl & Helm"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     steps:
       - uses: actions/checkout@v3
 
@@ -103,6 +105,7 @@ jobs:
   helm-unit-test:
     name: "Unit-Test | Helm"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     needs:
       - k8s-setup
     steps:
@@ -148,6 +151,7 @@ jobs:
   unit-java:
     name: "Unit-Test | Java"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     strategy:
       matrix:
         unit: ["persistence-defectdojo"]
@@ -170,6 +174,7 @@ jobs:
   operator:
     name: "Build | Operator"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     strategy:
       matrix:
         component: ["operator", "lurker"]
@@ -208,6 +213,7 @@ jobs:
   auto-discovery-kubernetes:
     name: "AutoDiscovery | Kubernetes"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -246,6 +252,7 @@ jobs:
   auto-discovery-kubernetes-secret-extraction-container:
     name: "Autodiscovery | Kubernetes | SecretExtractionInitContainer"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     needs: 
       - nvm-setup
       - k8s-setup
@@ -340,6 +347,7 @@ jobs:
   sdk:
     name: "Build | SDKs"
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     strategy:
       matrix:
         sdk:
@@ -374,6 +382,7 @@ jobs:
       - nvm-setup
       - k8s-setup
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     strategy:
       fail-fast: false
       matrix:
@@ -557,7 +566,7 @@ jobs:
 
   zap-advanced:
     name: "Zap-advanced integration-test"
-    if: ${{ github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'schedule' }} && github.repository == 'secureCodeBox/secureCodeBox'
     needs:
       - sdk
       - operator
@@ -743,6 +752,7 @@ jobs:
       - nvm-setup
       - k8s-setup
     runs-on: ubuntu-22.04
+    if: github.repository == 'secureCodeBox/secureCodeBox'
     strategy:
       matrix:
         hook:
